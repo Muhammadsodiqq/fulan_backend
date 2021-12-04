@@ -7,7 +7,8 @@ import http from "http";
 import dotenv from "dotenv";
 import data from "./modules/postgres.js";
 import routes from "./routes/routes.js";
-
+import swaggerUi from "swagger-ui-express";
+import swaggerDocs from './swagger.js'
 
 dotenv.config();
 
@@ -33,6 +34,7 @@ async function main() {
         next()
     })
 
+    app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
     routes(app)
     
     server.listen(process.env.PORT, _ => console.log("Server redy at port " + process.env.PORT));
