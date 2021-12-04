@@ -249,7 +249,7 @@ export default {
         },
         "/users/":{
             get:{
-                summary:"get All users Data",
+                summary:"get only checked students  Data",
                 parameters:[{
                     "in":"header",
                     required:true,
@@ -272,7 +272,118 @@ export default {
                 }
             },
             
-        }
+        },
+        "/users/activate":{
+            post:{
+                summary:"for check students from admin panel",
+                parameters:[{
+                    "in":"header",
+                    required:true,
+                    name:"Authorization",
+                    value:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk3NDMxNDJmLTEzMDUtNGRhMy1hNTQxLWM1MTEwYjVjZGFhYSIsImlhdCI6MTYyMjg1NTgwNX0.lyj6SvyBlpdZ2OrJN1GInnXsRRXhZty2Rj1xoT_2nwI",
+                    schema:{
+                        type:"string",
+                    }
+                },
+                {
+                    "in":"header",
+                    required:true,
+                    name:"user-id",
+                    value:"721cc21c-6377-4d76-acf1-a93d1675ed6e",
+                    schema:{
+                        type:"string",
+                    }
+                }],
+                requestBody:{
+                    content:{
+                        "application/json":{
+                            schema:{
+                                type:"object",
+                                properties:{
+                                    data:{
+                                        type:"boolean"
+                                    }
+                                },
+                                example:{
+                                    data:true,
+                                }
+                            }
+                        }
+                    }
+                },
+                responses:{
+                    '201':{
+                        description:"Code sent to user",
+                    },
+                    '401':{
+                        description:"Code  not sent to user"
+                    },
+                    '500':{
+                        description:"Internal server error"
+                    }
+                }
+            }
+        },
+        "/users/get/all-students":{
+            get:{
+                summary:"get All students Data from admin panel",
+                parameters:[{
+                    "in":"header",
+                    required:true,
+                    name:"Authorization",
+                    value:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk3NDMxNDJmLTEzMDUtNGRhMy1hNTQxLWM1MTEwYjVjZGFhYSIsImlhdCI6MTYyMjg1NTgwNX0.lyj6SvyBlpdZ2OrJN1GInnXsRRXhZty2Rj1xoT_2nwI",
+                    schema:{
+                        type:"string",
+                    }
+                }],
+                responses:{
+                    '202':{
+                        description:"User Personale Data edited",
+                    },
+                    '400':{
+                        description:"User Personal Data did not edited"
+                    },
+                    '500':{
+                        description:"Internal server error"
+                    }
+                }
+            },
+            
+        },
+        "/users/set-file":{
+            post:{
+                summary:"for upload file",
+                parameters:[{
+                    "in":"header",
+                    required:true,
+                    name:"Authorization",
+                    value:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk3NDMxNDJmLTEzMDUtNGRhMy1hNTQxLWM1MTEwYjVjZGFhYSIsImlhdCI6MTYyMjg1NTgwNX0.lyj6SvyBlpdZ2OrJN1GInnXsRRXhZty2Rj1xoT_2nwI",
+                    schema:{
+                        type:"string",
+                    }
+                },
+            {
+                "in":"formData",
+                required:true,
+                name:"file",
+                type: "file"
+
+            }],
+                
+                responses:{
+                    '201':{
+                        description:"Code sent to user",
+                    },
+                    '401':{
+                        description:"Code  not sent to user"
+                    },
+                    '500':{
+                        description:"Internal server error"
+                    }
+                }
+            }
+        },
+
     },
         
 }

@@ -63,7 +63,15 @@ export default class Validations{
             role:Joi.string()
                 .required()
                 .valid("student","sponsor")
-                .error(Error("motivation text is invalid"))
+                .error(Error("role is invalid"))
+        })
+    }
+
+    static AvtivateValidation() {
+        return Joi.object({
+            data:Joi.boolean()
+                .required()
+                .error(Error("data is invalid"))
         })
     }
 }

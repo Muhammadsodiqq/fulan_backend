@@ -18,7 +18,7 @@ async function data() {
       db.users = await Models.UserModel(Sequelize,sequelize);
       db.attempts = await Models.attemptsModel(Sequelize,sequelize);
       db.motive = await Models.userMotivation(Sequelize,sequelize);
-
+      db.file = await Models.userFileModel(Sequelize,sequelize)
       await db.users.hasMany(db.attempts, {
         foreignKey:{
           name:"user_id",
@@ -46,9 +46,32 @@ async function data() {
           allowNull:false
         }
       })
-      await sequelize.sync({force:true});
+
+      await db.users.hasMany(db.file, {
+        foreignKey:{
+          name:"user_id",
+          allowNull:true
+        }
+      })
+
+      await db.file.belongsTo(db.users,{
+        foreignKey:{
+          name:"user_id",
+          allowNull:false
+        }
+      })
+
+      // let user = await db.users.update({
+      //   user_role:"superadmin"
+      // },{
+      //   where:{
+      //     user_phone:"998917910420"
+      //   }
+      // })
+      // console.log(user);
+      // await sequelize.sync({force:true});
       // await sequelize.sync({alter:true})
-      // await db.motive.sync({force:true});
+      // await db.file.sync({force:true});
       return db;
       } catch (error) {
         console.error('Unable to connect to the database:', error);

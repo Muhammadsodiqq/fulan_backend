@@ -4,7 +4,12 @@ import bcrypt from "../modules/bcrypt.js";
 import rn from "random-number";
 import sms from "../modules/sms.js";
 import jwt from "../modules/jwt.js";
+import path from "path"
+import fs from 'fs/promises'
 const {Op} = Sequelize
+
+let __dirname = path.resolve(path.dirname(''));
+
 
 export default class userController {
     static async SignUp(req,res) {
@@ -18,7 +23,7 @@ export default class userController {
                  }
                 }
             })
-            console.log(userIsExists);
+            
             if (userIsExists) throw ("User already exists");
 
             const user = await req.db.users.create({
@@ -35,7 +40,7 @@ export default class userController {
             })
 
             const genNumber = gen();
-
+            console.log(genNumber);
             let attempts = await req.db.attempts.create({
                 code:genNumber,
                 user_id:user.user_id
@@ -141,9 +146,14 @@ export default class userController {
                 where:{
                     user_id:req.user
                 },
-                include:{
-                    model:req.db.motive
-                }
+                include:[
+                    {
+                        model:req.db.motive
+                    },
+                    {
+                        model:req.db.file
+                    }
+                ]
             });
              res.status(200).json({
                 ok: true,
@@ -166,9 +176,6 @@ export default class userController {
                 where:{
                     user_id:req.user
                 },
-                include:{
-                    model:req.db.motive
-                }
             });
             if(user.dataValues.user_role != "student")  throw "you can't set motivation text";
 
@@ -199,6 +206,22 @@ export default class userController {
         try {
             let data = await Validations.RoleValidation().validateAsync(req.body);
 
+            if(data.role == "sponsor") {
+
+                await req.db.motive.destroy({
+                    where:{
+                        user_id:req.user
+                    },
+                });
+
+                await req.db.users.update({
+                    isActive:true
+                },{
+                    where:{
+                        user_id:req.user
+                    }
+                })
+            }
             const user = await req.db.users.update({
                 user_role:data.role,
             },{
@@ -223,15 +246,139 @@ export default class userController {
     static async getUsers(req,res) {
         try {
             const user = await req.db.users.findAll({
-                include:{
-                    model:req.db.motive
-                }
+                where:{
+                    isActive:true
+                },
+                include:[
+                    {
+                        model:req.db.motive
+                    },
+                    {
+                        model:req.db.file
+                    }
+                ]
             });
             res.status(200).json({
                 ok: true,
                 data: user
             })
         } catch (error) {
+            res.status(400).json({
+                ok: false,
+                message: error + ""
+            })
+        }
+    }
+
+    static async ActivateUser(req,res) {
+        try {
+            const validationId = req.headers["user-id"]
+            if (!validationId) throw "user_id is invalid";
+            let data = await Validations.AvtivateValidation().validateAsync(req.body);
+
+            // if(!req.isAdmin) throw " you can't do this action";
+            // if(!req.isSuperAdmin) throw " you can't do this action";
+
+            let user = await req.db.users.update({
+                isActive:data.data,
+            },{
+                where:{
+                    user_id:validationId
+                }
+            })
+
+            res.status(200).json({
+                ok: true,
+                data: "succes"
+            })
+        } catch (error) {
+            res.status(400).json({
+                ok: false,
+                message: error + ""
+            })
+        }
+    }
+
+    static async getAllStudents(req,res) {
+        try {
+            const user = await req.db.users.findAll({
+                where:{
+                    user_role:"student"
+                },
+                include:[
+                    {
+                        model:req.db.motive
+                    },
+                    {
+                        model:req.db.file
+                    }
+                ]
+            });
+
+            res.status(200).json({
+                ok: true,
+                data: user
+            })
+        } catch (error) {
+            res.status(400).json({
+                ok: false,
+                message: error + ""
+            })
+        }
+    }
+
+    static async setFile(req,res) {
+        let fileBase
+        let type
+        try {
+            const fileElement = req.files.file;
+            if(!fileElement) throw new Error("File not found");
+            if((fileElement.size / 1024) > (50 * 1024)) throw new Error("File size is over size")
+            type = fileElement.name.split(".")[fileElement.name.split(".").length - 1]
+            if (!(type == "png" || type == "jpg" || type == "jpeg")) throw "this is not picture";
+
+            let oldFile = await req.db.file.findOne({
+                where: {
+                    user_id: req.user
+                }
+            })
+
+            if(oldFile) {
+                const filePath = path.join(__dirname,"src","public","files",`${oldFile.dataValues.photo_id}.`+ type);
+                await fs.unlink(filePath)
+            }
+
+            await req.db.file.destroy({
+                where: {
+                    user_id: req.user
+                }
+            })
+
+            const file = await req.db.file.create({
+                type: type,
+                user_id: req.user
+            })
+
+            fileBase = file;
+
+            const filePath = path.join(__dirname,"src","public","files",`${file.dataValues.photo_id}.`+ type)
+            await fs.writeFile(filePath,fileElement.data)
+            await res.status(201).json({
+                ok: true,
+                message: "File uploaded",
+                file
+            })
+        } catch (error) {
+            console.log(error);
+            if(fileBase) {
+                const filePath = path.join(__dirname,"src","public","files",`${fileBase.dataValues.photo_id}.`+ type);
+                await fs.unlink(filePath)
+                await req.db.file.destroy({
+                    where: {
+                        user_id: fileBase.dataValues.photo_id
+                    }
+                })
+            };
             res.status(400).json({
                 ok: false,
                 message: error + ""

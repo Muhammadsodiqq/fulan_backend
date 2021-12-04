@@ -66,4 +66,19 @@ export default class Models {
         })
     }
 
+    static async userFileModel (Sequelize,sequelize) {
+        return sequelize.define("user_file", {
+            photo_id: {
+                type: Sequelize.DataTypes.UUID,
+                primaryKey: true,
+                defaultValue: Sequelize.UUIDV4
+            },
+            type: {
+                type: Sequelize.DataTypes.ENUM,
+                values: ["png","jpg","jpeg"],
+                allowNull: false
+            }
+        })
+    }
+
 }
