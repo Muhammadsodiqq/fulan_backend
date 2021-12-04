@@ -11,6 +11,8 @@ router.get("/get",authMiddleware, userController.getOneUser)
 router.post("/set-motivate",authMiddleware, userController.setMotivation)
 router.post("/set-role",authMiddleware, userController.setUserRole)
 router.get("/",authMiddleware, userController.getUsers)
+
+
 export default {
     path:"/users",
     router

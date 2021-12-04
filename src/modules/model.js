@@ -10,6 +10,11 @@ export default class Models {
                 type:Sequelize.DataTypes.STRING,
                 allowNull: false,
             },
+            isActive:{
+                type:Sequelize.DataTypes.BOOLEAN,
+                defaultValue:false,
+                allowNull:false
+            },
             user_lastName:{
                 type: Sequelize.DataTypes.STRING(100),
                 allowNull: false,

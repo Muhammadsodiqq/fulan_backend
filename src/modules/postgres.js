@@ -46,7 +46,8 @@ async function data() {
           allowNull:false
         }
       })
-      // await sequelize.sync({force:true});
+      await sequelize.sync({force:true});
+      // await sequelize.sync({alter:true})
       // await db.motive.sync({force:true});
       return db;
       } catch (error) {
