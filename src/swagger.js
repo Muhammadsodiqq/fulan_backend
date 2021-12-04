@@ -11,7 +11,7 @@ export default {
     // servers:["http://localhost:8080"],
     apis:["**/*Route.js"],
     paths:{
-        "/users/signup":{
+        "/users/sign-up":{
             post:{
                 summary:"Register New User",
                 requestBody:{
