@@ -529,6 +529,23 @@ export default {
                         type:"string",
                     }
                 }],
+                requestBody:{
+                    content:{
+                        "application/json":{
+                            schema:{
+                                type:"object",
+                                properties:{
+                                    phone:{
+                                        type:"string"
+                                    }
+                                },
+                                example:{
+                                    data:"998917910420",
+                                }
+                            }
+                        }
+                    }
+                },
                 responses:{
                     '202':{
                         description:"User Personale Data edited",
