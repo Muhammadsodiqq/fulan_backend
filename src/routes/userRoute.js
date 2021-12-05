@@ -20,6 +20,10 @@ router.get("/",authMiddleware, userController.getUsers)
 router.post("/actiavate", [authMiddleware,adminMiddleware], userController.ActivateUser)
 router.get("/get/all-students", [authMiddleware,adminMiddleware], userController.getAllStudents)
 router.post("/set-file", [fileUpload("file", options),authMiddleware], userController.setFile)
+router.get("/get-student", [authMiddleware], userController.getOneStudent)
+router.get("/get-sponsor", [authMiddleware], userController.getOneSponsor)
+router.get("/get/all-sponsor", [authMiddleware,adminMiddleware], userController.getAllSponsors)
+
 
 export default {
     path:"/users",

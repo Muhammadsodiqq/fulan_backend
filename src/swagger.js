@@ -383,6 +383,84 @@ export default {
                 }
             }
         },
+        "/users/get/all-sponsor":{
+            get:{
+                summary:"get All sponsors Data from admin panel",
+                parameters:[{
+                    "in":"header",
+                    required:true,
+                    name:"Authorization",
+                    value:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk3NDMxNDJmLTEzMDUtNGRhMy1hNTQxLWM1MTEwYjVjZGFhYSIsImlhdCI6MTYyMjg1NTgwNX0.lyj6SvyBlpdZ2OrJN1GInnXsRRXhZty2Rj1xoT_2nwI",
+                    schema:{
+                        type:"string",
+                    }
+                }],
+                responses:{
+                    '202':{
+                        description:"User Personale Data edited",
+                    },
+                    '400':{
+                        description:"User Personal Data did not edited"
+                    },
+                    '500':{
+                        description:"Internal server error"
+                    }
+                }
+            },
+            
+        },
+        "/users/get-student":{
+            get:{
+                summary:"get one student's personal Data",
+                parameters:[{
+                    "in":"header",
+                    required:true,
+                    name:"Authorization",
+                    value:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk3NDMxNDJmLTEzMDUtNGRhMy1hNTQxLWM1MTEwYjVjZGFhYSIsImlhdCI6MTYyMjg1NTgwNX0.lyj6SvyBlpdZ2OrJN1GInnXsRRXhZty2Rj1xoT_2nwI",
+                    schema:{
+                        type:"string",
+                    }
+                }],
+                responses:{
+                    '202':{
+                        description:"User Personale Data edited",
+                    },
+                    '400':{
+                        description:"User Personal Data did not edited"
+                    },
+                    '500':{
+                        description:"Internal server error"
+                    }
+                }
+            },
+            
+        },
+        "/users/get-sponsor":{
+            get:{
+                summary:"get one sponsor's personal Data",
+                parameters:[{
+                    "in":"header",
+                    required:true,
+                    name:"Authorization",
+                    value:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk3NDMxNDJmLTEzMDUtNGRhMy1hNTQxLWM1MTEwYjVjZGFhYSIsImlhdCI6MTYyMjg1NTgwNX0.lyj6SvyBlpdZ2OrJN1GInnXsRRXhZty2Rj1xoT_2nwI",
+                    schema:{
+                        type:"string",
+                    }
+                }],
+                responses:{
+                    '202':{
+                        description:"User Personale Data edited",
+                    },
+                    '400':{
+                        description:"User Personal Data did not edited"
+                    },
+                    '500':{
+                        description:"Internal server error"
+                    }
+                }
+            },
+            
+        },
 
     },
         

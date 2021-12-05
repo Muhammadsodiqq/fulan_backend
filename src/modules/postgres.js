@@ -65,9 +65,11 @@ async function data() {
       //   user_role:"superadmin"
       // },{
       //   where:{
-      //     user_phone:"998917910420"
+      //     user_phone:"998935921802"
       //   }
       // })
+      // console.log(user);
+      // let user = await db.users.findAll()
       // console.log(user);
       // await sequelize.sync({force:true});
       // await sequelize.sync({alter:true})

@@ -327,6 +327,82 @@ export default class userController {
         }
     }
 
+    static async getOneStudent(req,res) {
+        try {
+            const validationId = req.headers["user-id"]
+            if (!validationId) throw "user_id is invalid";
+
+            let user = await req.db.users.findOne({
+                where:{
+                    user_id:validationId,
+                    user_role:"student"
+                },
+                include:[
+                    {
+                        model:req.db.motive
+                    },
+                    {
+                        model:req.db.file
+                    }
+                ]
+            })
+            res.status(200).json({
+                ok: true,
+                data: user
+            })
+        } catch (error) {
+            res.status(400).json({
+                ok: false,
+                message: error + ""
+            })
+        }
+    }
+
+    static async getAllSponsors(req,res) {
+        try {
+            const user = await req.db.users.findAll({
+                where:{
+                    user_role:"sponsor"
+                },
+                
+            });
+
+            res.status(200).json({
+                ok: true,
+                data: user
+            })
+        } catch (error) {
+            res.status(400).json({
+                ok: false,
+                message: error + ""
+            })
+        }
+    }
+
+    static async getOneSponsor(req,res) {
+        try {
+            const validationId = req.headers["user-id"]
+            if (!validationId) throw "user_id is invalid";
+
+            let user = await req.db.users.findOne({
+                where:{
+                    user_id:validationId,
+                    user_role:"sponsor"
+                },
+                
+            })
+            res.status(200).json({
+                ok: true,
+                data: user
+            })
+        } catch (error) {
+            res.status(400).json({
+                ok: false,
+                message: error + ""
+            })
+        }
+    }
+
     static async setFile(req,res) {
         let fileBase
         let type
