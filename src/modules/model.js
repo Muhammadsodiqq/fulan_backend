@@ -75,8 +75,8 @@ export default class Models {
             },
             type: {
                 type: Sequelize.DataTypes.ENUM,
-                values: ["png","jpg","jpeg"],
-                allowNull: false
+                values: ["png","jpg","jpeg","pdf"],
+                allowNull: false,
             }
         })
     }

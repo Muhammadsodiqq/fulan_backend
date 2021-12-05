@@ -422,7 +422,7 @@ export default class userController {
             if(!fileElement) throw new Error("File not found");
             if((fileElement.size / 1024) > (50 * 1024)) throw new Error("File size is over size")
             type = fileElement.name.split(".")[fileElement.name.split(".").length - 1]
-            if (!(type == "png" || type == "jpg" || type == "jpeg")) throw "this is not picture";
+            if (!(type == "png" || type == "jpg" || type == "jpeg" || type == "pdf")) throw "this is invalid file";
 
             let oldFile = await req.db.file.findOne({
                 where: {
