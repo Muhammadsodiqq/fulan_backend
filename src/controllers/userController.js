@@ -475,15 +475,21 @@ export default class userController {
 
     static async setAdmin(req,res) {
         try {
-            const validationId = req.headers["user-id"]
-            if (!validationId) throw "user_id is invalid";
+            let data = await Validations.AdminValidation().validateAsync(req.body);
+
+            let isHas = await req.db.users.findOne({
+                where:{
+                    user_phone:data.phone
+                }
+            })
+            if(!isHas) throw "this user is not registared"
 
             let user = await req.db.users.update({
                 user_role:"admin"
             },
             {
                 where:{
-                    user_id:validationId
+                    user_phone:data.phone
                 }
             })
 
