@@ -4,6 +4,7 @@ import adminMiddleware from "../middlewares/adminMiddleware.js";
 import authMiddleware from "../middlewares/authMiddleware.js";
 const router = Express.Router();
 import fileUpload from "express-fileupload";
+import superAdminMiddlseware from "../middlewares/superAdminMiddlseware.js";
 
 
 const options = {
@@ -23,6 +24,7 @@ router.post("/set-file", [fileUpload("file", options),authMiddleware], userContr
 router.get("/get-student", [authMiddleware], userController.getOneStudent)
 router.get("/get-sponsor", [authMiddleware], userController.getOneSponsor)
 router.get("/get/all-sponsor", [authMiddleware,adminMiddleware], userController.getAllSponsors)
+router.post("/set-admin", [authMiddleware,superAdminMiddlseware], userController.setAdmin)
 
 
 export default {

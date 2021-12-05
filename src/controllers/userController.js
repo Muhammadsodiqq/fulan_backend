@@ -472,4 +472,30 @@ export default class userController {
             })
         }
     }
+
+    static async setAdmin(req,res) {
+        try {
+            const validationId = req.headers["user-id"]
+            if (!validationId) throw "user_id is invalid";
+
+            let user = await req.db.users.update({
+                user_role:"admin"
+            },
+            {
+                where:{
+                    user_id:validationId
+                }
+            })
+
+            res.status(200).json({
+                ok: true,
+                data: "succes"
+            })
+        } catch (error) {
+            res.status(400).json({
+                ok: false,
+                message: error + ""
+            })
+        }
+    }
 }
