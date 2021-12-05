@@ -531,7 +531,7 @@ export default {
                                     }
                                 },
                                 example:{
-                                    data:"998917910420",
+                                    phone:"998917910420",
                                 }
                             }
                         }
