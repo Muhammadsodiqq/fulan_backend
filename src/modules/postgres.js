@@ -62,10 +62,10 @@ async function data() {
       })
 
       // let user = await db.users.update({
-      //   user_role:"superadmin"
+      //   user_role:"sponsor"
       // },{
       //   where:{
-      //     user_phone:"998935921802"
+      //     user_phone:"998935921808"
       //   }
       // })
       // console.log(user);

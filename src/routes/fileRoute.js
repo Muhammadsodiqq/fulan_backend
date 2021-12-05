@@ -6,7 +6,6 @@ const router = Express.Router();
 
 const __dirname = path.resolve(path.dirname(""))
 
-router.use(authMiddleware)
 
 router.use("/getfile", Express.static(path.join(__dirname,"src","public","files")))
 
