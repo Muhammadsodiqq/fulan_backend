@@ -11,6 +11,13 @@ const {Op} = Sequelize
 let __dirname = path.resolve(path.dirname(''));
 
 
+const getPagination = (page, size) => {
+    const limit = size ? + size : 20;
+    const offset = page ? page * limit : 0;
+
+    return { limit, offset };
+};
+
 export default class userController {
     static async SignUp(req,res) {
         try {
@@ -245,10 +252,14 @@ export default class userController {
     }
     static async getUsers(req,res) {
         try {
+            const { page, size } = req.query;
+            const { limit, offset } = getPagination(page, size);
             const user = await req.db.users.findAll({
-                where:{
-                    isActive:true
-                },
+                limit,
+                offset,
+                // where:{
+                //     isActive:true
+                // },
                 include:[
                     {
                         model:req.db.motive

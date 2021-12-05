@@ -420,6 +420,15 @@ export default {
                     schema:{
                         type:"string",
                     }
+                },
+                {
+                    "in":"header",
+                    required:true,
+                    name:"user-id",
+                    value:"721cc21c-6377-4d76-acf1-a93d1675ed6e",
+                    schema:{
+                        type:"string",
+                    }
                 }],
                 responses:{
                     '202':{
@@ -443,6 +452,15 @@ export default {
                     required:true,
                     name:"Authorization",
                     value:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk3NDMxNDJmLTEzMDUtNGRhMy1hNTQxLWM1MTEwYjVjZGFhYSIsImlhdCI6MTYyMjg1NTgwNX0.lyj6SvyBlpdZ2OrJN1GInnXsRRXhZty2Rj1xoT_2nwI",
+                    schema:{
+                        type:"string",
+                    }
+                },
+                {
+                    "in":"header",
+                    required:true,
+                    name:"user-id",
+                    value:"721cc21c-6377-4d76-acf1-a93d1675ed6e",
                     schema:{
                         type:"string",
                     }
