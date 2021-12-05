@@ -519,16 +519,7 @@ export default {
                     schema:{
                         type:"string",
                     }
-                },
-                {
-                    "in":"header",
-                    required:true,
-                    name:"user-id",
-                    value:"721cc21c-6377-4d76-acf1-a93d1675ed6e",
-                    schema:{
-                        type:"string",
-                    }
-                }],
+                },],
                 requestBody:{
                     content:{
                         "application/json":{
