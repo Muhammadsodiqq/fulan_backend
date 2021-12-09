@@ -69,7 +69,11 @@ async function data() {
       //   }
       // })
       // console.log(user);
-      // let user = await db.users.findAll()
+      // let user = await db.users.destroy({
+      //   where:{
+      //     user_phone:"998906048714"
+      //   }
+      // })
       // console.log(user);
       // await sequelize.sync({force:true});
       // await sequelize.sync({alter:true})

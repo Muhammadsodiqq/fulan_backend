@@ -255,11 +255,10 @@ export default class userController {
             const { page, size } = req.query;
             const { limit, offset } = getPagination(page, size);
             const user = await req.db.users.findAll({
-                limit,
-                offset,
-                // where:{
-                //     isActive:true
-                // },
+                where:{
+                    isActive:true,
+                    user_role:"student"
+                },
                 include:[
                     {
                         model:req.db.motive
